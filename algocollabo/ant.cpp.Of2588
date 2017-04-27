@@ -150,7 +150,7 @@ void ville :: egalite(ville * dd){
     void ant:: deposer_pheromone(Route* road)
     {
 
-        road->pheromone=road->pheromone+abs((1/(gamma*abs(3*longueur_empreinte))));//pour etre sur que les pheromones augmente qvec le temps
+        road->pheromone=road->pheromone+abs((1/(gamma*abs(5*longueur_empreinte))));//pour etre sur que les pheromones augmente qvec le temps
       //cout<<road->pheromone<<"pheromone"<<endl;
     }
 
@@ -173,7 +173,7 @@ void ville :: egalite(ville * dd){
 
     //methode de la classe road
     void Route::evaporer_pheromone()
-    { pheromone=0.9*pheromone;//*(1/(9*longueur));
+    { pheromone=0.9*pheromone*(1/longueur);
 
     }
     Route:: Route(ville* pre,ville* seco):premiere(pre),seconde(seco)
@@ -183,7 +183,7 @@ void ville :: egalite(ville * dd){
 
         this->longueur=sqrt(pow((temp1[0]-temp2[0]),2)+ pow((temp1[1]-temp2[1]),2));
     cout<<"la route est de longueur "<<longueur<<endl;
-    pheromone=15/pow(longueur,5);
+    pheromone=1/pow(longueur,5);
         }
 
     float Route::getphero(){
@@ -336,7 +336,7 @@ void ville :: egalite(ville * dd){
       for( int i=0;i<listemp.size();i++)
       {
           int f=listemp[i];
-            Route * temp=route[f];
+          Route * temp=route[f];
           //cout<<temp->getpre()->getposition()[0]<<endl;
              premvroute =temp->getpre();
              secvroute=temp->getsec();
@@ -363,7 +363,7 @@ void ville :: egalite(ville * dd){
            {
                  cout<<"cgfgfg2"<<endl;
                  Max=four->getTendance(temp);
-                 routechoisi=temp;
+                  routechoisi=temp;
                   newdesti=secvroute;
                   newdepart=premvroute;
                    beenmodified=true;
@@ -377,37 +377,30 @@ void ville :: egalite(ville * dd){
            if(!four->pasvisite(routechoisi->getpre())) four->nb_foisrepe++;
 
             if(conditiondegalite( destfour,src_nourriture))// revoir cette condion a quelle moment depose la nourriture quand on se dirige ou quand on en repart vu quon fait un virage
-              {
-                four->distanceaparcourir=0;
+              {  four->distanceaparcourir=0;
                 four->longueur_empreinte=1;
-                four->prendre_nourriture();//methode change la valeur de la variable booleenne
-                four->cheminprec2=four->villedejavisite;
+                four->prendre_nourriture();
                 four->villedejavisite={src_nourriture};
                  };
 
 
-            if(conditiondegalite(destfour,nid))
+            if(conditiondegalite( destfour,nid))
                   {
                    if(four->porte_nourriture)
-                     {
-                       four->distanceaparcourir=0;
-                       four->longueur_empreinte=1;
+                       {  four->distanceaparcourir=0;
+                        four->longueur_empreinte=1;
                        four->quantite_nourriture++;
-                       four->cheminprec=four->villedejavisite;
-                       four->longueur_empreinte2=four->longueur_empreinte;
-
-                      // cout<<"a deposer de la nourriture en plus il arrive au nid et il dit pas a quelqu'un "<<endl;}
-                     //  four->cheminprec.insert(four->cheminprec.end(),four->villedejavisite.begin(),four->villedejavisite.end());
-
+                 //   cout<<"a deposer de la nourriture en plus il arrive au nid et il dit pas a quelqu'un "<<endl;}
+                  // four->cheminprec.insert(four->cheminprec.end(),four->villedejavisite.begin(),four->villedejavisite.end());
+                      four->cheminprec=four->villedejavisite;
                        four->villedejavisite={nid};
                        four->porte_nourriture=false;//il depose logique
+
                          }
 
                    } ;
         if(!conditiondegalite( destfour,src_nourriture) && !conditiondegalite( destfour,nid))
-              {
-
-                   four->distanceaparcourir+=routechoisi->getlongueur();
+              {    four->distanceaparcourir+=routechoisi->getlongueur();
                    four->villedejavisite.push_back(four->destination);
                     }//la ville va changer
 
@@ -426,10 +419,9 @@ void ville :: egalite(ville * dd){
       four->destination=nid;
       four->depart=nid;
       four->villedejavisite={};
-     // four->cheminprec={};
+      four->cheminprec={};
       four->longueur_empreinte=0;
       four->distanceaparcourir=-1;
-      four->porte_nourriture=false;
   }
  cout<< four->distanceaparcourir<<"  "<<four->longueur_empreinte<<endl;
 
@@ -439,10 +431,10 @@ void ville :: egalite(ville * dd){
     {
 
         this->initiville(5);
-        this->initifourmis(50);
+        this->initifourmis(100);
         this->initiroute();
          this->construirenet();
-        for (int t=0;t<20; t++) {
+        for (int t=0;t<5; t++) {
               for(int ff=0; ff<50; ff++) this->faireuntour();
              this->rangelesantq();
               this->progeniture();
@@ -464,21 +456,10 @@ void ville :: egalite(ville * dd){
             {   ant* four=fourmis[i];
             vector<ville*>  temp;
             temp=four->cheminprec;
-            cout<<"les villes visite par la fourmis "<<i<<"sont"<<temp.size()<<endl;
+            cout<<"les villes visite par la fourmis "<<i<<"sont"<<endl;
             for(int tt=0; tt<temp.size();tt++) temp[tt]->display();
-            cout<<four->quantite_nourriture<<"distance parcurur pendant ce tour est "<<four->longueur_empreinte2<<endl;
+            cout<<four->quantite_nourriture<<endl;
             }
-        for( int i=0 ; i<this->fourmis.size();i++)
-            {   ant* four=fourmis[i];
-            vector<ville*>  temp;
-            temp=four->cheminprec2;
-            cout<<"les villes visite par la fourmis  "<<i<<"a l'alller sont"<<temp.size()<<endl;
-            for(int tt=0; tt<temp.size();tt++) temp[tt]->display();
-            //cout<<four->quantite_nourriture<<endl;
-            }
-
-
-
     }
  void Civilisation :: rangelesantq()
 

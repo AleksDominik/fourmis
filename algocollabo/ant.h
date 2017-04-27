@@ -8,18 +8,20 @@ using namespace std;
 class ville
 {
    private :
-    vector<ville*> villelie;
+
     float position_X;
     float position_Y;
     //vector<ville*> villeconnecte;
    public:
-
+   vector<int> routelie;
     vector<float> getposition ();
     ville(float xx,float yy);
     friend bool conditiondegalite(ville* a, ville* b);
    // bool operator==(ville*);
     ville* operator=(ville*);
-    vector<ville*> getvillelie();
+    void egalite(ville* a );
+    vector<int> getroutelie();
+    void putvillelie(ville*);
     void display();
 
 }
@@ -62,6 +64,7 @@ class ant
 public:
     vector<ville*> villedejavisite;//lors d'un tour
     vector<ville*> cheminprec;// tout son parcour
+     vector<ville*> cheminprec2;
     ville *destination;
     ville *depart;
     float distanceaparcourir;
@@ -72,6 +75,7 @@ public:
     int nb_foisrepe;
     bool porte_nourriture=false;
 //****methodes*****
+    float longueur_empreinte2=0;
     float longueur_empreinte=0.0001;//pour evite les division par zeros
     ant();
     ant(ant papa, ant maman);
@@ -85,7 +89,7 @@ public:
     void marcher();//avancer une etape plus
     void mutation();
     bool pasvisite(ville * road);
-    ant & operator=(ant* );
+    ant * operator=(ant* );
 
 }
 #endif
@@ -121,7 +125,7 @@ public:
     void chemin();
     void rangelesantq();
     void progeniture();
-
+    void construirenet();
 };
 #endif
 

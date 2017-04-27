@@ -12,13 +12,15 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
     return app.exec();*/
-    /*ville abengourou(5,4);
+   /* ville abengourou(5,4);
     ville constantinople(4,5);
     ville* c= &abengourou;
     ville*p=&constantinople;
     ant jeanpierre;
     ant jeanclaude;
-
+//    p=c;
+//    cout<<"ici";
+//    p->display();
     ant* four=&jeanpierre;
     ant* four1=&jeanclaude;
     four1->destination=c;
@@ -38,8 +40,8 @@ int main(int argc, char *argv[])
     //cout<<randomUniform(1,2)<<endl;
    //************************/
 
- Civilisation dumoyenage;
-// dumoyenage.initifourmis(5);
+Civilisation dumoyenage;
+ //dumoyenage.initifourmis(5);
   //dumoyenage.faireuntour();
   //dumoyenage.faireuntour();
   //dumoyenage.initiville(5);
@@ -48,6 +50,7 @@ int main(int argc, char *argv[])
    //ant* magellan =dumoyenage.fourmis[0];
 
  dumoyenage.traitement();
+
 
 
     return 0;
