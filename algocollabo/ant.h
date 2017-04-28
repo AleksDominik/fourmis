@@ -11,17 +11,13 @@ class ville
 
     float position_X;
     float position_Y;
-    //vector<ville*> villeconnecte;
    public:
    vector<int> routelie;
     vector<float> getposition ();
     ville(float xx,float yy);
     friend bool conditiondegalite(ville* a, ville* b);
-   // bool operator==(ville*);
+
     ville* operator=(ville*);
-    void egalite(ville* a );
-    vector<int> getroutelie();
-    void putvillelie(ville*);
     void display();
 
 }
@@ -64,7 +60,7 @@ class ant
 public:
     vector<ville*> villedejavisite;//lors d'un tour
     vector<ville*> cheminprec;// tout son parcour
-     vector<ville*> cheminprec2;
+
     ville *destination;
     ville *depart;
     float distanceaparcourir;
@@ -72,15 +68,13 @@ public:
     float beta;
     float gamma;
     float quantite_nourriture=0;
-    int nb_foisrepe;
     bool porte_nourriture=false;
 //****methodes*****
     float longueur_empreinte2=0;
     float longueur_empreinte=0.0001;//pour evite les division par zeros
     ant();
     ant(ant papa, ant maman);
-    void putdestination(ville* vill);
-    void putdepart(ville* vill);
+
     float getTendance(Route *road);
     void prendre_nourriture();
     void laisser_nourriture();
@@ -121,11 +115,11 @@ public:
     vector <ville*> getville();
     vector<Route *> getroute();
     vector<ant*> getant();
-  //  void metjourdisparcour(ant& four);
     void chemin();
     void rangelesantq();
     void progeniture();
     void construirenet();
+    void rangelesantlong();
 };
 #endif
 
